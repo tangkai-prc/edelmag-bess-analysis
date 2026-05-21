@@ -151,9 +151,9 @@
     }
     .legend {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       gap: 8px;
-      align-items: stretch;
+      align-items: center;
       padding: 8px 14px;
       border-top: 1px solid var(--border);
       background: var(--panel);
@@ -162,7 +162,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+      margin-left: auto;
+      flex: 0 0 auto;
+      order: 2;
+      white-space: nowrap;
     }
     .filter-bar input {
       width: min(300px, 100%);
@@ -176,15 +181,19 @@
     .filter-summary {
       color: var(--muted);
       font-size: 12px;
-      margin-left: auto;
     }
     .legend-list {
       display: flex;
       gap: 8px;
       align-items: center;
-      flex-wrap: wrap;
-      max-height: 104px;
-      overflow: auto;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-height: 40px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      order: 1;
     }
     .legend button {
       display: inline-flex;
@@ -233,6 +242,53 @@
       display: flex;
       justify-content: space-between;
       gap: 14px;
+    }
+
+    /* Combined-page embedded mode */
+    .app {
+      grid-template-rows: auto 1fr auto !important;
+    }
+    .topbar {
+      display: none !important;
+    }
+    .tabs {
+      flex-wrap: nowrap !important;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+    .tab-list {
+      display: flex !important;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+    .tabs button {
+      flex: 0 0 auto;
+      white-space: nowrap;
+    }
+    .legend {
+      flex-direction: row !important;
+      align-items: center !important;
+    }
+    .legend-list {
+      flex-wrap: nowrap !important;
+      flex: 1 1 auto !important;
+      min-width: 0;
+      justify-content: flex-start !important;
+      max-height: 40px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      order: 1;
+    }
+    .filter-bar {
+      flex-wrap: nowrap !important;
+      justify-content: flex-end;
+      margin-left: auto;
+      flex: 0 0 auto !important;
+      order: 2;
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -1861,7 +1917,7 @@
       filterBar.className = "filter-bar";
 
       const selectAllBtn = document.createElement("button");
-      selectAllBtn.textContent = "全选";
+      selectAllBtn.textContent = "Select All";
       selectAllBtn.addEventListener("click", () => {
         for (const s of matchedSeries) state[s.name] = true;
         fitView();
@@ -1870,7 +1926,7 @@
       });
 
       const clearBtn = document.createElement("button");
-      clearBtn.textContent = "清空";
+      clearBtn.textContent = "Clear";
       clearBtn.addEventListener("click", () => {
         for (const s of matchedSeries) state[s.name] = false;
         fitView();
@@ -1880,7 +1936,7 @@
 
       const summary = document.createElement("span");
       summary.className = "filter-summary";
-      summary.textContent = `${selectedCount}/${availableSeries.length} 显示`;
+      summary.textContent = `${selectedCount}/${availableSeries.length} shown`;
 
       filterBar.appendChild(selectAllBtn);
       filterBar.appendChild(clearBtn);

@@ -31,14 +31,16 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       border-bottom: 1px solid var(--border);
       background: var(--panel);
+      flex-wrap: nowrap;
     }
     .title {
       font-size: 16px;
       font-weight: 700;
-      min-width: 280px;
+      flex: 0 0 auto;
+      white-space: nowrap;
     }
     .year-nav {
       display: flex;
@@ -65,6 +67,13 @@
       color: var(--muted);
       font-size: 12px;
       white-space: nowrap;
+      display: none;
+    }
+    .help {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
     }
     iframe {
       width: 100%;
@@ -83,7 +92,8 @@
         <button type="button" class="active" data-year="2024">2024</button>
         <button type="button" data-year="2025">2025</button>
       </div>
-      <div id="status" class="status">2024 Feb-Mar-Apr</div>
+      <div class="help">Wheel: zoom | Drag: pan | Click daily point: detail | Right click: back | Filter: show/hide curves</div>
+      <div id="status" class="status"></div>
     </div>
     <iframe id="viewer" src="porvenir_2024_analysis_charts/2024_Interactive_Preview.html" title="Porvenir SCADA yearly preview"></iframe>
   </div>
